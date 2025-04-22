@@ -5,7 +5,7 @@ export function Button({ children, onClick, variant = 'default' }) {
     outline: 'border border-gray-300 text-gray-700 hover:bg-gray-100',
   };
   return (
-    <button className={\`\${base} \${styles[variant]}\`} onClick={onClick}>
+    <button className={`${base} ${styles[variant]}`} onClick={onClick}>
       {children}
     </button>
   );
