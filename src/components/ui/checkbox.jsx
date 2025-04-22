@@ -1,3 +1,10 @@
-export function Checkbox(props) {
-  return <div {...props} />;
+export function Checkbox({ checked, onCheckedChange }) {
+  return (
+    <input
+      type="checkbox"
+      checked={checked}
+      onChange={(e) => onCheckedChange(e.target.checked)}
+      className="w-5 h-5 accent-purple-600 cursor-pointer"
+    />
+  );
 }
