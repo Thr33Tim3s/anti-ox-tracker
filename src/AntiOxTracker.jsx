@@ -59,38 +59,40 @@ export default function AntiOxTracker() {
   })).sort((a, b) => new Date(a.date) - new Date(b.date));
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-2">抗氧生活打卡</h1>
-      <p className="text-center text-sm text-gray-500 mb-6">今天是 {today}</p>
+    <div className="min-h-screen bg-gray-50 px-4 py-8 flex flex-col items-center">
+      <div className="w-full max-w-2xl">
+        <h1 className="text-4xl font-bold text-center text-purple-700 mb-2">抗氧生活打卡</h1>
+        <p className="text-center text-sm text-gray-500 mb-6">今天是 {today}</p>
 
-      <div className="space-y-3">
-        {tasks.map((task, index) => (
-          <Card key={index} className="shadow-sm">
-            <CardContent className="flex items-center gap-4 py-4 px-2">
-              <Checkbox checked={checkedItems[index]} onCheckedChange={() => toggleItem(index)} />
-              <span className="text-base text-gray-800">{task}</span>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+        <div className="space-y-3">
+          {tasks.map((task, index) => (
+            <Card key={index} className="shadow-sm">
+              <CardContent className="flex items-center gap-4 py-4 px-2">
+                <Checkbox checked={checkedItems[index]} onCheckedChange={() => toggleItem(index)} />
+                <span className="text-base text-gray-800">{task}</span>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
 
-      <div className="text-center mt-6">
-        <Button variant="outline" onClick={() => setCheckedItems(Array(tasks.length).fill(false))}>
-          重置打卡
-        </Button>
-      </div>
+        <div className="text-center mt-6">
+          <Button variant="outline" onClick={() => setCheckedItems(Array(tasks.length).fill(false))}>
+            重置打卡
+          </Button>
+        </div>
 
-      <div className="mt-10">
-        <h2 className="text-xl font-semibold mb-4">📈 打卡趋势图</h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis domain={[0, tasks.length]} />
-            <Tooltip />
-            <Line type="monotone" dataKey="score" stroke="#8884d8" strokeWidth={2} dot />
-          </LineChart>
-        </ResponsiveContainer>
+        <div className="mt-12 mb-6">
+          <h2 className="text-xl font-semibold mb-4 text-center">📈 打卡趋势图</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis domain={[0, tasks.length]} />
+              <Tooltip />
+              <Line type="monotone" dataKey="score" stroke="#8884d8" strokeWidth={2} dot />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </div>
   );
