@@ -1,9 +1,8 @@
-
 import { useEffect, useState } from 'react';
+import { format } from 'date-fns';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { format } from 'date-fns';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const tasks = [
@@ -18,7 +17,7 @@ const tasks = [
   '不吃油炸/加工食物',
   '吃超级抗氧食物（蓝莓/姜黄等）+1分',
   '晚餐早于7:30 +1分',
-  '户外自然/阳光15分钟 +1分'
+  '户外自然阳光15分钟 +1分'
 ];
 
 const STORAGE_KEY = 'antiOxCheckin';
@@ -60,23 +59,29 @@ export default function AntiOxTracker() {
   })).sort((a, b) => new Date(a.date) - new Date(b.date));
 
   return (
-    <div className="max-w-xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center">抗氧生活打卡</h1>
-      <p className="text-center text-sm mb-6">今天是 {today}</p>
-      {tasks.map((task, index) => (
-        <Card key={index} className="mb-2">
-          <CardContent className="flex items-center space-x-3 py-3">
-            <Checkbox checked={checkedItems[index]} onCheckedChange={() => toggleItem(index)} />
-            <span className="text-base">{task}</span>
-          </CardContent>
-        </Card>
-      ))}
+    <div className="max-w-2xl mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold text-center mb-2">抗氧生活打卡</h1>
+      <p className="text-center text-sm text-gray-500 mb-6">今天是 {today}</p>
+
+      <div className="space-y-3">
+        {tasks.map((task, index) => (
+          <Card key={index} className="shadow-sm">
+            <CardContent className="flex items-center gap-4 py-4 px-2">
+              <Checkbox checked={checkedItems[index]} onCheckedChange={() => toggleItem(index)} />
+              <span className="text-base text-gray-800">{task}</span>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
       <div className="text-center mt-6">
-        <Button onClick={() => setCheckedItems(Array(tasks.length).fill(false))}>重置打卡</Button>
+        <Button variant="outline" onClick={() => setCheckedItems(Array(tasks.length).fill(false))}>
+          重置打卡
+        </Button>
       </div>
 
       <div className="mt-10">
-        <h2 className="text-lg font-semibold mb-2">🧾 打卡趋势图</h2>
+        <h2 className="text-xl font-semibold mb-4">📈 打卡趋势图</h2>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
